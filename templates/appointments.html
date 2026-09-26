@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Appointments{% endblock %}
+{% block content %}
+<section class="appointment-hero">
+  <div class="appointment-title"><span class="live-label"><i class="pulse-dot"></i> {% if selected_day == today %}TODAY’S{% else %}DAILY{% endif %} CLINIC SCHEDULE</span><h1>Clinical Appointments &amp;<br class="title-break"> Outpatient Schedule</h1><p>{{ all_day_appointments|length }} appointments on {{ selected_day.strftime('%A, %B %d, %Y') }}</p></div>
+  <div class="appointment-hero-actions"><div class="date-picker-bar"><a aria-label="Previous day" href="{{ url_for('appointments', date=previous_day.isoformat(), status=status, specialty=specialty) }}">‹</a><label>▣ <input type="date" id="scheduleDate" value="{{ selected_day.isoformat() }}" aria-label="Choose schedule date"></label><a href="{{ url_for('appointments', date=next_day.isoformat(), status=status, specialty=specialty) }}" aria-label="Next day">›</a></div><div class="schedule-action-row"><a class="btn btn-primary" href="{{ url_for('add_appointment', date=selected_day.isoformat()) }}">⊕ Book appointment</a><a class="btn btn-outline-secondary" href="{{ url_for('export_appointments_calendar', date=selected_day.isoformat()) }}">⇩ Export calendar</a><button class="btn btn-outline-secondary" type="button" onclick="window.print()">⎙ Print day roster</button></div></div>
+</section>
+
+<section class="appointment-stats">
+  <article><span>TOTAL APPOINTMENTS</span><b>{{ all_day_appointments|length }}</b><small>{{ selected_day.strftime('%b %d') }} schedule</small><i>▣</i></article>
+  <article><span>SCHEDULED</span><b>{{ all_day_appointments|selectattr('status','equalto','Scheduled')|list|length }}</b><small>Upcoming or in progress</small><i>◷</i></article>
+  <article><span>COMPLETED</span><b>{{ all_day_appointments|selectattr('status','equalto','Completed')|list|length }}</b><small>Visits completed</small><i>✓</i></article>
+  <article><span>CANCELLED</span><b>{{ all_day_appointments|selectattr('status','equalto','Cancelled')|list|length }}</b><small>Cancelled visits</small><i>⊘</i></article>
+  <article><span>DOCTORS SCHEDULED</span><b>{{ doctor_summaries|length }}</b><small>With appointments today</small><i>♙</i></article>
+</section>
+
+<section class="schedule-controls">
+  <div class="schedule-view-switch" role="group" aria-label="Schedule layout"><button type="button" class="view-switch active" data-view="matrix">▥ <span>Doctor schedule</span></button><button type="button" class="view-switch" data-view="list">▤ <span>List view</span></button></div>
+  <form method="get" action="{{ url_for('appointments') }}" class="schedule-filter-form"><input type="hidden" name="date" value="{{ selected_day.isoformat() }}"><label>Department<select name="specialty" onchange="this.form.requestSubmit()"><option value="All">All specialties</option>{% for specialty_name in doctors|map(attribute='specialization')|unique|sort %}<option value="{{ specialty_name }}" {% if specialty == specialty_name %}selected{% endif %}>{{ specialty_name }}</option>{% endfor %}</select></label><label>Status<select name="status" onchange="this.form.requestSubmit()"><option value="All">All statuses</option>{% for value in ['Scheduled','Completed','Cancelled'] %}<option value="{{ value }}" {% if status == value %}selected{% endif %}>{{ value }}</option>{% endfor %}</select></label><button class="btn btn-outline-secondary btn-sm" type="submit">Apply filters</button></form>
+</section>
+
+<section class="schedule-board-panel" id="matrixView">
+  {% if doctor_summaries %}
+  <div class="schedule-board-scroll"><div class="schedule-board" style="--doctor-columns: {{ doctor_summaries|length }}">
+    <div class="schedule-time-heading">TIME</div>
+    {% for group in doctor_summaries %}<div class="doctor-column-heading"><span class="doctor-avatar">{{ group.doctor.name[:2]|upper }}</span><span><b>Dr. {{ group.doctor.name }}</b><small>{{ group.doctor.specialization }}</small></span><strong>{{ group.appointments|length }}</strong></div>{% endfor %}
+    {% for slot in time_slots %}<div class="schedule-time-cell">{{ slot }}</div>{% for group in doctor_summaries %}<div class="schedule-slot-cell">{% for a in group.appointments if a.appointment_date.strftime('%H:%M') == slot %}<article class="appointment-card appointment-{{ a.status|lower }}"><div class="appointment-card-head"><b>{{ a.patient.name }}, {{ a.patient.age }}</b><span class="appointment-status status-{{ a.status|lower }}">{{ a.status }}</span></div><p>{{ a.reason or 'General visit' }}</p><div class="appointment-card-meta"><span>◷ {{ a.appointment_date.strftime('%I:%M %p') }}</span><span>☎ {{ a.patient.phone }}</span></div><div class="appointment-card-actions">{% if a.status == 'Scheduled' %}<form method="post" action="{{ url_for('appointment_status', appointment_id=a.id, status='Completed', date=selected_day.isoformat()) }}">{{ csrf_input() }}<button type="submit">Mark completed</button></form><form method="post" action="{{ url_for('appointment_status', appointment_id=a.id, status='Cancelled', date=selected_day.isoformat()) }}">{{ csrf_input() }}<button type="submit" class="quiet-action">Cancel</button></form>{% else %}<a href="{{ url_for('patients', selected=a.patient.id) }}">Open patient record</a>{% endif %}</div></article>{% endfor %}</div>{% endfor %}{% endfor %}
+  </div></div>
+  {% else %}<div class="schedule-no-results"><span>▣</span><b>No appointments match this schedule</b><small>Choose another date or filter, or book an appointment.</small><a class="btn btn-primary btn-sm" href="{{ url_for('add_appointment', date=selected_day.isoformat()) }}">Book appointment</a></div>{% endif %}
+</section>
+
+<section class="schedule-list-panel" id="listView" hidden>
+  <div class="schedule-list-heading"><div><span class="eyebrow">DAY ROSTER</span><h2>Appointments for {{ selected_day.strftime('%B %d, %Y') }}</h2></div><span>{{ appointments|length }} results</span></div>
+  <div class="schedule-list-scroll"><table class="schedule-list-table"><thead><tr><th>TIME</th><th>PATIENT</th><th>DOCTOR</th><th>REASON</th><th>STATUS</th><th>ACTIONS</th></tr></thead><tbody>
+  {% for a in appointments %}<tr><td>{{ a.appointment_date.strftime('%I:%M %p') }}</td><td><a href="{{ url_for('patients', selected=a.patient.id) }}">{{ a.patient.name }} <small>{{ a.patient.age }} years · {{ a.patient.gender }}</small></a></td><td>Dr. {{ a.doctor.name }}<small>{{ a.doctor.specialization }}</small></td><td>{{ a.reason or 'General visit' }}</td><td><span class="appointment-status status-{{ a.status|lower }}">{{ a.status }}</span></td><td>{% if a.status == 'Scheduled' %}<form method="post" action="{{ url_for('appointment_status', appointment_id=a.id, status='Completed', date=selected_day.isoformat()) }}">{{ csrf_input() }}<button class="list-complete">Complete</button></form><form method="post" action="{{ url_for('appointment_status', appointment_id=a.id, status='Cancelled', date=selected_day.isoformat()) }}">{{ csrf_input() }}<button class="list-cancel">Cancel</button></form>{% else %}—{% endif %}</td></tr>{% else %}<tr><td colspan="6" class="schedule-empty">No appointments match these filters.</td></tr>{% endfor %}
+  </tbody></table></div>
+</section>
+
+<section class="appointment-insights">
+  <article class="schedule-insight"><header><span>◷</span><h2>Next appointments</h2><small>{{ all_day_appointments|length }} total</small></header><div class="insight-body">{% for a in all_day_appointments[:4] %}<div class="next-appointment"><time>{{ a.appointment_date.strftime('%I:%M %p') }}</time><div><b>{{ a.patient.name }}</b><small>Dr. {{ a.doctor.name }} · {{ a.reason or 'General visit' }}</small></div><span class="appointment-status status-{{ a.status|lower }}">{{ a.status }}</span></div>{% else %}<p class="insight-empty">No appointments booked for this day.</p>{% endfor %}</div></article>
+  <article class="schedule-insight"><header><span>▦</span><h2>Department load</h2><small>By specialty</small></header><div class="insight-body">{% for name, count in specialty_counts.items()|sort %}<div class="department-load"><span class="department-dot"></span><span>{{ name }}</span><b>{{ count }}</b><small>{{ 'appointment' if count == 1 else 'appointments' }}</small></div>{% else %}<p class="insight-empty">No department appointments for this day.</p>{% endfor %}</div></article>
+  <article class="schedule-insight schedule-tools"><header><span>✚</span><h2>Schedule tools</h2><small>Quick actions</small></header><div class="insight-body"><a href="{{ url_for('patients') }}">♙ <span><b>Patient directory</b><small>Find or update a patient record</small></span>›</a><a href="{{ url_for('doctors') }}">✚ <span><b>Care team</b><small>View doctors and specialties</small></span>›</a><a href="{{ url_for('export_appointments_calendar', date=selected_day.isoformat()) }}">⇩ <span><b>Calendar export</b><small>Download this day as an .ics file</small></span>›</a></div></article>
+</section>
+{% endblock %}
+{% block page_scripts %}
+<script>
+(() => {
+  const dateInput = document.getElementById('scheduleDate');
+  dateInput?.addEventListener('change', () => { if (dateInput.value) location.href = `{{ url_for('appointments') }}?date=${encodeURIComponent(dateInput.value)}`; });
+  const buttons = [...document.querySelectorAll('.view-switch')];
+  const matrix = document.getElementById('matrixView'), list = document.getElementById('listView');
+  buttons.forEach(button => button.addEventListener('click', () => {
+    buttons.forEach(item => item.classList.toggle('active', item === button));
+    const isList = button.dataset.view === 'list';
+    matrix.hidden = isList; list.hidden = !isList;
+    localStorage.setItem('appointment-view', isList ? 'list' : 'matrix');
+  }));
+  const initialView = localStorage.getItem('appointment-view');
+  if (initialView === 'list') buttons.find(button => button.dataset.view === 'list')?.click();
+})();
+</script>
+{% endblock %}

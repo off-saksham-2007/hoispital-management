@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}CuraPulse{% endblock %} · CuraPulse Clinic Suite</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css', v='20260925-2') }}">
+  <script>document.documentElement.dataset.theme=localStorage.getItem('careflow-theme')||'light';</script>
+</head>
+<body class="{% if not session.get('user_id') and request.endpoint != 'login' %}public-admin {% if request.endpoint == 'index' %}public-dashboard{% endif %}{% endif %}">
+{% if session.get('user_id') or (session.get('role') == 'admin' and request.endpoint != 'login') %}
+<aside class="sidebar">
+  <a class="brand" href="{{ url_for('index') }}"><span class="brand-mark">✚</span><span>CuraPulse<small>CLINIC SUITE</small></span></a>
+  <div class="nav-caption">CLINIC OPERATIONS</div>
+  <nav class="side-nav">
+    <a class="side-link {% if request.endpoint == 'index' %}active{% endif %}" href="{{ url_for('index') }}"><span>▦</span> Dashboard</a>
+    <a class="side-link {% if request.endpoint in ['patients','add_patient','edit_patient'] %}active{% endif %}" href="{{ url_for('patients') }}"><span>♙</span> Patients</a>
+    <a class="side-link {% if 'appointment' in (request.endpoint or '') %}active{% endif %}" href="{{ url_for('appointments') }}"><span>▣</span> Appointments</a>
+    {% if session.get('role') in ['admin','doctor'] %}<a class="side-link {% if 'prescription' in (request.endpoint or '') %}active{% endif %}" href="{{ url_for('prescriptions') }}"><span>▤</span> Prescriptions</a>{% endif %}
+    <a class="side-link {% if request.endpoint in ['doctors','add_doctor','edit_doctor'] %}active{% endif %}" href="{{ url_for('doctors') }}"><span>✚</span> Doctors</a>
+    {% if session.get('role') in ['admin','receptionist'] %}<a class="side-link {% if 'flow' in (request.endpoint or '') %}active{% endif %}" href="{{ url_for('patient_flow') }}"><span>⌁</span> Patient flow</a>{% endif %}
+    {% if session.get('role') in ['admin','receptionist'] %}<a class="side-link {% if 'billing' in (request.endpoint or '') %}active{% endif %}" href="{{ url_for('billing') }}"><span>＄</span> Billing & invoices</a>{% endif %}
+    {% if session.get('role') == 'admin' %}<a class="side-link {% if request.endpoint == 'staff' %}active{% endif %}" href="{{ url_for('staff') }}"><span>♧</span> Staff & access</a>{% endif %}
+  </nav>
+  <div class="sidebar-bottom"><div class="profile"><div class="avatar">{{ session.get('username','U')[0]|upper }}</div><div class="profile-name"><b>{{ session.get('username') }}</b><small>{{ session.get('role','staff')|title }}</small></div><a href="{{ url_for('change_password') }}" title="Change password">⚙</a><form method="post" action="{{ url_for('logout') }}">{{ csrf_input() }}<button class="signout-button" title="Sign out">↗</button></form></div><div class="secure-note"><i class="pulse-dot"></i> EMR Node · Secure</div></div>
+</aside>
+{% if not session.get('user_id') and request.endpoint != 'login' %}<a class="public-signin" href="{{ url_for('login') }}">Staff sign in</a>{% endif %}
+<header class="mobile-header"><a class="brand" href="{{ url_for('index') }}"><span class="brand-mark">✚</span> CuraPulse</a><button class="menu-toggle" type="button" onclick="document.body.classList.toggle('menu-open')" aria-label="Toggle navigation">☰</button></header>
+<header class="clinical-topbar"><form class="global-search" method="get" action="{{ url_for('patients') }}"><span>⌕</span><input name="q" placeholder="Search patients…" aria-label="Search patients"><kbd>↵</kbd></form><div class="system-status"><i class="pulse-dot"></i><b>Main Clinic:</b> Operational</div><div class="topbar-actions"><span class="topbar-bell" aria-label="Notifications">♧<i>3</i></span><a href="{{ url_for('change_password') }}" class="topbar-user"><span class="avatar">{{ session.get('username','U')[0]|upper }}</span><span><b>{{ session.get('username') }}</b><small>{{ session.get('role','staff')|title }} · Clinic</small></span><span class="user-caret">⌄</span></a></div></header>
+<button class="theme-toggle" type="button" aria-label="Switch to dark theme" title="Switch theme"><span class="theme-icon">◐</span><span class="theme-label">Dark</span></button>
+{% endif %}
+{% if request.endpoint == 'login' %}<button class="theme-toggle" type="button" aria-label="Switch to dark theme" title="Switch theme"><span class="theme-icon">◐</span><span class="theme-label">Dark</span></button>{% endif %}
+<main class="main-content {% if not session.get('user_id') and request.endpoint == 'login' %}guest-content{% endif %} {% if request.endpoint == 'index' %}dashboard-page{% endif %}">
+  {% with messages = get_flashed_messages(with_categories=true) %}{% for category, message in messages %}<div class="alert alert-{{ category }} alert-dismissible fade show">{{ message }}<button class="btn-close" data-bs-dismiss="alert"></button></div>{% endfor %}{% endwith %}
+  {% block content %}{% endblock %}
+</main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+(() => {
+  const button = document.querySelector('.theme-toggle');
+  if (!button) return;
+  const updateButton = () => {
+    const dark = document.documentElement.dataset.theme === 'dark';
+    button.querySelector('.theme-label').textContent = dark ? 'Light' : 'Dark';
+    button.querySelector('.theme-icon').textContent = dark ? '☼' : '◐';
+    button.setAttribute('aria-label', `Switch to ${dark ? 'light' : 'dark'} theme`);
+  };
+  updateButton();
+  button.addEventListener('click', () => {
+    const theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    document.documentElement.dataset.theme = theme;
+    localStorage.setItem('careflow-theme', theme);
+    updateButton();
+    window.dispatchEvent(new Event('themechange'));
+  });
+})();
+</script>
+<script>
+(() => {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const main = document.querySelector('.main-content');
+  if (main && !reduceMotion) {
+    main.classList.add('motion-enter');
+    requestAnimationFrame(() => main.classList.add('motion-entered'));
+  }
+
+  const cards = document.querySelectorAll('.clinical-stat,.clinical-panel,.schedule-insight,.directory-toolbar,.directory-table-panel,.patient-record-panel,.rx-search-panel,.rx-record-card,.rx-detail-card,.rx-history-panel,.rx-pharmacy-note,.card,.flow-banner');
+  if (!cards.length) return;
+
+  if (!reduceMotion && 'IntersectionObserver' in window) {
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('motion-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, {threshold: 0.08, rootMargin: '0px 0px -20px 0px'});
+    cards.forEach((card, index) => {
+      card.classList.add('motion-reveal');
+      card.style.setProperty('--reveal-delay', `${Math.min(index % 6, 5) * 65}ms`);
+      revealObserver.observe(card);
+    });
+  }
+
+  const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (reduceMotion || !finePointer) return;
+  cards.forEach(card => {
+    card.classList.add('motion-tilt');
+    card.addEventListener('pointermove', event => {
+      const rect = card.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width;
+      const y = (event.clientY - rect.top) / rect.height;
+      const tiltX = (0.5 - y) * 8;
+      const tiltY = (x - 0.5) * 9;
+      card.style.setProperty('--tilt-x', `${tiltX.toFixed(2)}deg`);
+      card.style.setProperty('--tilt-y', `${tiltY.toFixed(2)}deg`);
+      card.style.setProperty('--spot-x', `${(x * 100).toFixed(1)}%`);
+      card.style.setProperty('--spot-y', `${(y * 100).toFixed(1)}%`);
+    });
+    card.addEventListener('pointerleave', () => {
+      card.style.setProperty('--tilt-x', '0deg');
+      card.style.setProperty('--tilt-y', '0deg');
+      card.style.setProperty('--spot-x', '50%');
+      card.style.setProperty('--spot-y', '50%');
+    });
+  });
+})();
+</script>
+{% block page_scripts %}{% endblock %}
+</body></html>
