@@ -60,10 +60,6 @@ Every API route checks the signed-in session and required role on the server. Hi
 
 Records reference patients and doctors using MongoDB ObjectIds. Removing a patient or doctor record does not cascade-delete linked records, so review and resolve dependent data before removing records.
 
-## Existing Flask version
-
-The older `app.py`, Jinja templates and `requirements.txt` are retained in the repository for reference. The supported MongoDB version is started with `npm start` and serves the frontend from `public/`.
-
 ## Deployment note
 
 This is an educational starter, not a production medical-record platform. Production use needs a security review, audit trails, backups, encryption and access controls designed for the applicable health-data requirements.
