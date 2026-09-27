@@ -1,20 +1,34 @@
 {
-  "name": "carepoint-hospital-management",
+  "name": "hospital_management",
   "version": "1.0.0",
   "private": true,
   "description": "Role-based hospital management system backed by MongoDB",
   "main": "server.js",
-  "scripts": { "start": "node server.js", "dev": "node --watch server.js" },
-  "engines": { "node": ">=20" },
+  "scripts": {
+    "build:css": "tailwindcss -i ./src/tailwind.css -o ./public/tailwind.css --minify",
+    "start": "npm run build:css && node server.js",
+    "dev:css": "tailwindcss -i ./src/tailwind.css -o ./public/tailwind.css --watch",
+    "dev:server": "node --watch server.js",
+    "dev": "concurrently -k -n css,server \"npm run dev:css\" \"npm run dev:server\""
+  },
+  "engines": {
+    "node": ">=20"
+  },
   "dependencies": {
+    "@tailwindcss/cli": "^4.3.3",
+    "aos": "^2.3.4",
     "bcryptjs": "^2.4.3",
     "connect-mongo": "^5.1.0",
     "dotenv": "^16.4.7",
-    "express-async-errors": "^3.1.1",
     "express": "^4.21.2",
+    "express-async-errors": "^3.1.1",
     "express-mongo-sanitize": "^2.2.0",
     "express-session": "^1.18.1",
     "helmet": "^8.0.0",
-    "mongoose": "^8.9.5"
+    "mongoose": "^8.9.5",
+    "tailwindcss": "^4.3.3"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.5"
   }
 }
