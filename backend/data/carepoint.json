@@ -1,0 +1,624 @@
+{
+  "users": [
+    {
+      "id": "usr_admin",
+      "username": "admin",
+      "email": "admin@carepoint.in",
+      "displayName": "System Administrator",
+      "role": "admin",
+      "passwordHash": "$2a$10$U3RRzW9h9UnH4KwK0tV/EeTtof2Fjv3lIM7YRXg.VJdC7ZB9znHKa",
+      "active": true
+    },
+    {
+      "id": "usr_doc1",
+      "username": "dr.arjun",
+      "email": "arjun@carepoint.in",
+      "displayName": "Dr. Arjun Mehta",
+      "role": "doctor",
+      "specialization": "Cardiology",
+      "passwordHash": "$2a$10$1jQHy6hC21Vk009kWU9F1O.4/.ipgdCfbx6Z0.wMBoWM3Q4GTYTeS",
+      "active": true,
+      "phone": "+91 9876501001"
+    },
+    {
+      "id": "usr_doc2",
+      "username": "dr.priya",
+      "email": "priya@carepoint.in",
+      "displayName": "Dr. Priya Sharma",
+      "role": "doctor",
+      "specialization": "Pediatrics",
+      "passwordHash": "$2a$10$bxlMcoaXuWU5i.BZyvXnoeo9mv5p.aymBju4UvFa6uu1TsVh.HZCO",
+      "active": true
+    },
+    {
+      "id": "usr_doc3",
+      "username": "dr.rahul",
+      "email": "rahul@carepoint.in",
+      "displayName": "Dr. Rahul Gupta",
+      "role": "doctor",
+      "specialization": "Orthopedics",
+      "passwordHash": "$2a$10$PfTFYKdRPzUG4k9AV0SgkOuSxrlwOPaowiIAOeD6kcLNuxRY3YBVG",
+      "active": true
+    },
+    {
+      "id": "usr_doc4",
+      "username": "dr.sunita",
+      "email": "sunita@carepoint.in",
+      "displayName": "Dr. Sunita Patel",
+      "role": "doctor",
+      "specialization": "Neurology",
+      "passwordHash": "$2a$10$I.akImMlgTNGRE8ZwOPWGueDLeFljRqC1pUcYUOP1NkxqECz3J9RW",
+      "active": true
+    },
+    {
+      "id": "usr_staff1",
+      "username": "nurse.rekha",
+      "email": "rekha@carepoint.in",
+      "displayName": "Rekha Joshi",
+      "role": "staff",
+      "subRole": "nurse",
+      "passwordHash": "$2a$10$trc6NTlZEODBHKVeo7Lm1emGsXhqQHPTAaxuLaUoGo12hQdLscCuC",
+      "active": true,
+      "phone": "+91 9876502001"
+    },
+    {
+      "id": "usr_staff2",
+      "username": "reception.suresh",
+      "email": "suresh@carepoint.in",
+      "displayName": "Suresh Nair",
+      "role": "staff",
+      "subRole": "receptionist",
+      "passwordHash": "$2a$10$NI7druzvrQmYCXdfYmoZeuT2kbk3YQB3U0oVQ0FYsaXEgQcSC6pqS",
+      "active": true
+    },
+    {
+      "id": "usr_pat1",
+      "username": "rahul.patient",
+      "email": "rahul@example.com",
+      "displayName": "Rahul Sharma",
+      "role": "patient",
+      "phone": "+91 9876543210",
+      "passwordHash": "$2a$10$i2FoqLgCyu.PZAj4HNI9Jeylkc0QIOK8UHDc25Nxo5M/NTzyXTcWO",
+      "active": true
+    }
+  ],
+  "patients": [
+    {
+      "id": "SP-1001",
+      "name": "Rahul Sharma",
+      "age": 29,
+      "gender": "Male",
+      "bloodGroup": "B+",
+      "phone": "+91 98765 43210",
+      "email": "rahul@example.com",
+      "address": "Andheri West, Mumbai",
+      "dateOfBirth": "1995-04-12",
+      "username": "rahul.patient"
+    },
+    {
+      "id": "SP-1002",
+      "name": "Priya Singh",
+      "age": 34,
+      "gender": "Female",
+      "bloodGroup": "A+",
+      "phone": "+91 98765 00002",
+      "email": "priya.s@example.com",
+      "address": "Bandra, Mumbai",
+      "dateOfBirth": "1990-08-22"
+    },
+    {
+      "id": "SP-1003",
+      "name": "Amit Patil",
+      "age": 48,
+      "gender": "Male",
+      "bloodGroup": "O+",
+      "phone": "+91 98765 00003",
+      "email": "amit@example.com",
+      "address": "Dadar, Mumbai",
+      "dateOfBirth": "1976-11-05"
+    },
+    {
+      "id": "SP-1004",
+      "name": "Elena Varco",
+      "age": 60,
+      "gender": "Female",
+      "bloodGroup": "A-",
+      "phone": "+91 98765 00004",
+      "email": "elena@example.com",
+      "address": "Colaba, Mumbai",
+      "dateOfBirth": "1964-03-10"
+    }
+  ],
+  "doctors": [
+    {
+      "id": "DOC-001",
+      "name": "Dr. Arjun Mehta",
+      "specialization": "Cardiology",
+      "hospital": "CarePoint Super-Speciality Hospital",
+      "exp": 18,
+      "fee": 1350,
+      "phone": "+91 9876501001",
+      "email": "arjun@carepoint.in",
+      "username": "dr.arjun",
+      "status": "Off Duty",
+      "bio": "Renowned Chief Cardiologist with 18+ years experience in interventional cardiology, stenting, and preventive coronary care.",
+      "keywords": [
+        "heart",
+        "chest pain",
+        "angioplasty",
+        "hypertension",
+        "ecg"
+      ],
+      "rating": 5,
+      "ratingCount": 4,
+      "assignedStaffId": "STF-01",
+      "assignedStaffName": "Rekha Joshi",
+      "assignedStaffUsername": "nurse.rekha",
+      "qualification": "MBBS, MD (Cardiology), DM",
+      "timings": "09:00 AM - 04:30 PM",
+      "workingDays": "Mon - Sat",
+      "opdRoom": "OPD Chamber 101, Ground Floor"
+    },
+    {
+      "id": "DOC-002",
+      "name": "Dr. Priya Sharma",
+      "specialization": "Pediatrics",
+      "hospital": "CarePoint Super-Speciality Hospital",
+      "exp": 12,
+      "fee": 800,
+      "phone": "+91 9876501002",
+      "email": "priya@carepoint.in",
+      "username": "dr.priya",
+      "status": "On Duty",
+      "bio": "Renowned Pediatrician caring for infant immunization, developmental milestones, and childhood infections.",
+      "keywords": [
+        "child",
+        "baby",
+        "infant",
+        "vaccination",
+        "pediatric",
+        "growth"
+      ],
+      "rating": 0,
+      "ratingCount": 0,
+      "assignedStaffId": "STF-02",
+      "assignedStaffName": "Suresh Nair",
+      "assignedStaffUsername": "reception.suresh"
+    },
+    {
+      "id": "DOC-003",
+      "name": "Dr. Rahul Gupta",
+      "specialization": "Orthopedics",
+      "hospital": "CarePoint Super-Speciality Hospital",
+      "exp": 15,
+      "fee": 1000,
+      "phone": "+91 9876501003",
+      "email": "rahul@carepoint.in",
+      "username": "dr.rahul",
+      "status": "In OR",
+      "bio": "Orthopedic surgeon expert in joint replacement, sports injury rehab, and spine disorders.",
+      "keywords": [
+        "bone",
+        "joint",
+        "knee",
+        "fracture",
+        "spine",
+        "arthritis",
+        "back pain"
+      ],
+      "rating": 5,
+      "ratingCount": 1,
+      "assignedStaffId": "STF-01",
+      "assignedStaffName": "Rekha Joshi",
+      "assignedStaffUsername": "nurse.rekha"
+    },
+    {
+      "id": "DOC-004",
+      "name": "Dr. Sunita Patel",
+      "specialization": "Neurology",
+      "hospital": "CarePoint Super-Speciality Hospital",
+      "exp": 20,
+      "fee": 1500,
+      "phone": "+91 9876501004",
+      "email": "sunita@carepoint.in",
+      "username": "dr.sunita",
+      "status": "On Duty",
+      "bio": "Consultant Neurologist specializing in migraines, stroke rehabilitation, seizures, and nerve disorders.",
+      "keywords": [
+        "brain",
+        "headache",
+        "migraine",
+        "stroke",
+        "nerve",
+        "seizure",
+        "dizziness"
+      ],
+      "rating": 0,
+      "ratingCount": 0,
+      "assignedStaffId": "STF-02",
+      "assignedStaffName": "Suresh Nair",
+      "assignedStaffUsername": "reception.suresh"
+    },
+    {
+      "id": "DOC-005",
+      "name": "Dr. Kavita Desai",
+      "specialization": "Dermatology",
+      "hospital": "CarePoint Super-Speciality Hospital",
+      "exp": 10,
+      "fee": 700,
+      "phone": "+91 9876501005",
+      "email": "kavita@carepoint.in",
+      "username": "dr.kavita",
+      "status": "On Duty",
+      "bio": "Cosmetic and clinical dermatologist treating severe acne, psoriasis, hair fall, and allergies.",
+      "keywords": [
+        "skin",
+        "rash",
+        "acne",
+        "itching",
+        "eczema",
+        "allergy",
+        "hair loss"
+      ],
+      "rating": 0,
+      "ratingCount": 0,
+      "assignedStaffId": "STF-01",
+      "assignedStaffName": "Rekha Joshi",
+      "assignedStaffUsername": "nurse.rekha"
+    },
+    {
+      "id": "DOC-006",
+      "name": "Dr. Manish Verma",
+      "specialization": "General Medicine",
+      "hospital": "CarePoint Super-Speciality Hospital",
+      "exp": 16,
+      "fee": 800,
+      "phone": "+91 9876501006",
+      "email": "manish@carepoint.in",
+      "username": "dr.manish",
+      "status": "On Duty",
+      "bio": "Chief of General Medicine managing viral fevers, diabetes, infectious illnesses, and chronic health.",
+      "keywords": [
+        "fever",
+        "cold",
+        "cough",
+        "flu",
+        "weakness",
+        "diabetes",
+        "infection"
+      ],
+      "rating": 0,
+      "ratingCount": 0,
+      "assignedStaffId": "STF-02",
+      "assignedStaffName": "Suresh Nair",
+      "assignedStaffUsername": "reception.suresh"
+    }
+  ],
+  "appointments": [
+    {
+      "id": "APT-101",
+      "patientId": "SP-1001",
+      "patientName": "Rahul Sharma",
+      "doctorId": "DOC-001",
+      "doctorName": "Dr. Arjun Mehta",
+      "dept": "Cardiology",
+      "date": "2026-09-29",
+      "time": "10:00 AM",
+      "reason": "Routine ECG & Blood Pressure follow-up",
+      "status": "Cancelled",
+      "qrToken": "QR-APT-101-7721",
+      "attendanceStatus": "Pending"
+    },
+    {
+      "id": "APT-102",
+      "patientId": "SP-1002",
+      "patientName": "Priya Singh",
+      "doctorId": "DOC-002",
+      "doctorName": "Dr. Priya Sharma",
+      "dept": "Pediatrics",
+      "date": "2026-09-29",
+      "time": "11:30 AM",
+      "reason": "Child MMR Booster Vaccination",
+      "status": "Checked In",
+      "qrToken": "QR-APT-102-8819",
+      "attendanceStatus": "Checked In",
+      "checkedInAt": "11:15 AM"
+    },
+    {
+      "id": "APT-103",
+      "patientId": "SP-1003",
+      "patientName": "Amit Patil",
+      "doctorId": "DOC-003",
+      "doctorName": "Dr. Rahul Gupta",
+      "dept": "Orthopedics",
+      "date": "2026-09-27",
+      "time": "02:00 PM",
+      "reason": "Right Knee arthroscopy post-op evaluation",
+      "status": "Completed",
+      "qrToken": "QR-APT-103-3312",
+      "attendanceStatus": "Checked In",
+      "paymentStatus": "Paid",
+      "paidAmount": 800,
+      "fee": 800,
+      "paidAt": "2026-09-30T04:51:24.816Z",
+      "paymentMethod": "Cash / UPI",
+      "collectedBy": "Rekha Joshi"
+    }
+  ],
+  "prescriptions": [
+    {
+      "id": "RX-1001",
+      "appointmentId": "APT-103",
+      "patientId": "SP-1003",
+      "patientName": "Amit Patil",
+      "doctorName": "Dr. Rahul Gupta",
+      "diagnosis": "Right Knee Osteoarthritis Grade II",
+      "symptoms": "Mild swelling and pain while climbing stairs",
+      "medicines": [
+        {
+          "name": "Diclofenac Sodium 50mg",
+          "dosage": "1 Tab",
+          "frequency": "Twice daily (BD)",
+          "duration": "5 Days",
+          "instructions": "Take after meals"
+        },
+        {
+          "name": "Calcium + Vit D3 Tablets",
+          "dosage": "1 Tab",
+          "frequency": "Once daily (OD)",
+          "duration": "30 Days",
+          "instructions": "With warm milk at bedtime"
+        }
+      ],
+      "tests": [
+        "X-Ray Right Knee AP/Lateral",
+        "Serum Uric Acid"
+      ],
+      "instructions": "Apply cold compress for 10 minutes twice a day. Avoid deep squats.",
+      "followUpDate": "In 2 weeks",
+      "date": "2026-09-29"
+    },
+    {
+      "id": "RX-1002",
+      "appointmentId": "",
+      "patientId": "SP-1005",
+      "patientName": "minakshi",
+      "doctorName": "Dr. Arjun Mehta",
+      "diagnosis": "for heart health",
+      "symptoms": "",
+      "medicines": [
+        {
+          "name": "Paracetamol 650mg",
+          "dosage": "1 Tab",
+          "frequency": "Twice daily (BD)",
+          "duration": "5 Days",
+          "instructions": "After meals"
+        },
+        {
+          "name": "mikotinamide dysenide fhosfate",
+          "dosage": "1 Tab",
+          "frequency": "Twice daily (BD)",
+          "duration": "5 Days",
+          "instructions": "After meals"
+        }
+      ],
+      "tests": [],
+      "instructions": "Get plenty of rest and stay well hydrated. Avoid strenuous physical activity.",
+      "followUpDate": "In 7 days",
+      "date": "2026-09-30"
+    },
+    {
+      "id": "RX-1003",
+      "appointmentId": "",
+      "patientId": "SP-1001",
+      "patientName": "Demo Patient",
+      "doctorName": "Dr. Arjun Mehta",
+      "diagnosis": "Mild hypertension",
+      "symptoms": "",
+      "medicines": [
+        {
+          "name": "Amlodipine 5mg",
+          "dosage": "1 tab",
+          "frequency": "Once daily",
+          "duration": "30 days"
+        }
+      ],
+      "tests": [],
+      "instructions": "Rest and hydrate.",
+      "followUpDate": "In 7 days",
+      "date": "2026-10-13"
+    },
+    {
+      "id": "RX-1004",
+      "appointmentId": "",
+      "patientId": "SP-1001",
+      "patientName": "Rahul Sharma",
+      "doctorName": "Dr. Arjun Mehta",
+      "diagnosis": "Normal sinus rhythm, mild fatigue",
+      "symptoms": "",
+      "medicines": [
+        {
+          "name": "Multivitamin Complex",
+          "dosage": "1 tab",
+          "frequency": "Daily after breakfast",
+          "duration": "15 days"
+        }
+      ],
+      "tests": [],
+      "instructions": "Maintain 2.5L daily hydration and light aerobic walking.",
+      "followUpDate": "In 7 days",
+      "date": "2026-10-13"
+    },
+    {
+      "id": "RX-1005",
+      "appointmentId": "APT-014",
+      "patientId": "SP-1001",
+      "patientName": "Rahul Sharma",
+      "doctorName": "Dr. Arjun Mehta",
+      "diagnosis": "Normal sinus rhythm, mild fatigue",
+      "symptoms": "",
+      "medicines": [
+        {
+          "name": "Multivitamin Complex",
+          "dosage": "1 tab",
+          "frequency": "Daily after breakfast",
+          "duration": "15 days"
+        }
+      ],
+      "tests": [],
+      "instructions": "Maintain 2.5L daily hydration and light aerobic walking.",
+      "followUpDate": "In 7 days",
+      "date": "2026-10-13"
+    },
+    {
+      "id": "RX-1006",
+      "appointmentId": "APT-015",
+      "patientId": "SP-1001",
+      "patientName": "Rahul Sharma",
+      "doctorName": "Dr. Arjun Mehta",
+      "diagnosis": "Sinus rhythm normal, mild exertion fatigue",
+      "symptoms": "",
+      "medicines": [
+        {
+          "name": "Vitamin B Complex",
+          "dosage": "1 tab",
+          "frequency": "Daily",
+          "duration": "14 days"
+        }
+      ],
+      "tests": [],
+      "instructions": "Keep blood pressure log every morning.",
+      "followUpDate": "In 7 days",
+      "date": "2026-10-13"
+    }
+  ],
+  "feedbacks": [
+    {
+      "id": "FB-001",
+      "appointmentId": "APT-103",
+      "patientName": "Amit Patil",
+      "doctorId": "DOC-003",
+      "doctorName": "Dr. Rahul Gupta",
+      "rating": 5,
+      "comment": "Dr. Gupta was extremely thorough and gentle. Knee pain subsided quickly.",
+      "date": "2026-09-25"
+    }
+  ],
+  "labs": [
+    {
+      "id": "LAB-001",
+      "patientId": "SP-1001",
+      "patientName": "Rahul Sharma",
+      "testName": "Lipid Profile & Serum Cholesterol",
+      "doctorName": "Dr. Arjun Mehta",
+      "status": "Completed",
+      "result": "Total: 185 mg/dL (Normal)",
+      "date": "2026-09-26"
+    },
+    {
+      "id": "LAB-002",
+      "patientId": "SP-1003",
+      "patientName": "Amit Patil",
+      "testName": "Digital X-Ray Right Knee",
+      "doctorName": "Dr. Rahul Gupta",
+      "status": "Completed",
+      "result": "Mild medial joint space reduction",
+      "date": "2026-09-26"
+    }
+  ],
+  "invoices": [
+    {
+      "id": "INV-201",
+      "patientId": "SP-1001",
+      "patientName": "Rahul Sharma",
+      "description": "Cardiology Specialist Consultation & ECG",
+      "amount": 1500,
+      "paidAmount": 1500,
+      "status": "Paid",
+      "date": "2026-09-28"
+    },
+    {
+      "id": "INV-202",
+      "patientId": "SP-1003",
+      "patientName": "Amit Patil",
+      "description": "Orthopedic Consultation + Knee Joint Dressing",
+      "amount": 1800,
+      "paidAmount": 1800,
+      "status": "Paid",
+      "date": "2026-09-26"
+    }
+  ],
+  "wards": [
+    {
+      "id": "BED-01",
+      "bedCode": "ICU-04",
+      "ward": "ICU & Critical Care",
+      "patientName": "Elena Varco",
+      "doctorName": "Dr. Arjun Mehta",
+      "diagnosis": "Acute Respiratory Distress",
+      "admittedAt": "2026-09-27",
+      "status": "Admitted"
+    },
+    {
+      "id": "BED-02",
+      "bedCode": "GW-12",
+      "ward": "General Medical Ward",
+      "patientName": "Amit Patil",
+      "doctorName": "Dr. Rahul Gupta",
+      "diagnosis": "Knee Arthroscopy Recovery",
+      "admittedAt": "2026-09-26",
+      "status": "Admitted"
+    }
+  ],
+  "staff": [
+    {
+      "id": "STF-01",
+      "name": "Rekha Joshi",
+      "role": "Staff Nurse",
+      "dept": "ICU / Emergency",
+      "phone": "+91 9876502001",
+      "active": true,
+      "shiftTiming": "08:00 AM - 04:00 PM",
+      "employeeId": "EMP-STF-9921"
+    },
+    {
+      "id": "STF-02",
+      "name": "Suresh Nair",
+      "role": "Receptionist / Registrar",
+      "dept": "OPD Admissions",
+      "phone": "+91 9876502002",
+      "active": true
+    }
+  ],
+  "inventory": [
+    {
+      "id": "MED-001",
+      "name": "Paracetamol 650mg",
+      "category": "Analgesic",
+      "quantity": 598,
+      "unit": "Tablets",
+      "price": 3,
+      "status": "In Stock"
+    },
+    {
+      "id": "MED-002",
+      "name": "Amoxicillin 250mg",
+      "category": "Antibiotic",
+      "quantity": 180,
+      "unit": "Capsules",
+      "price": 8,
+      "status": "In Stock"
+    },
+    {
+      "id": "MED-003",
+      "name": "Atorvastatin 10mg",
+      "category": "Cardiac",
+      "quantity": 140,
+      "unit": "Tablets",
+      "price": 12,
+      "status": "In Stock"
+    }
+  ],
+  "notifications": [],
+  "contactMessages": []
+}
